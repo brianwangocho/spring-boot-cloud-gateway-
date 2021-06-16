@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: movie-service
+#          uri: lb://MOVIE-SERVICE
+#          predicates:
+#            - Path=/movies/**
+#          filters:
+#            - AuthenticationFilter
+#            - name: CircuitBreaker
+#              args:
+#                name: movie-service
+#                fallbackuri: forward:/movieServiceFallBack
+#        - id: auth-service
+#          uri: lb://AUTH-SERVICE
+#          predicates:
+#            - Path=/api/users/**
+#          filters :
+#            - AuthenticationFilter
+
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
+
+server:
+  port: 8000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
